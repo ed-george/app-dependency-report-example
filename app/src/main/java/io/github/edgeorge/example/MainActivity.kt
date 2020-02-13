@@ -2,16 +2,9 @@ package io.github.edgeorge.example
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import io.github.edgeorge.example.networking.GlideApp
-import io.github.edgeorge.example.networking.Network
-import io.github.edgeorge.example.networking.NetworkImage
-import io.github.edgeorge.example.networking.ext.enqueue
 import io.github.edgeorge.example.networking.model.Character
 
 import kotlinx.android.synthetic.main.activity_main.*

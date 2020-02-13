@@ -24,7 +24,7 @@ class MainActivityViewModel : ViewModel() {
                 result?.let(_character::postValue)
             },
             doOnFailure = { throwable ->
-                throwable?.let { Log.w(TAG, it) }
+                Log.w(TAG, throwable?.message ?: "Generic Error")
             }
         )
     }
