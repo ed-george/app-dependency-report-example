@@ -1,0 +1,2 @@
+include ':app', ':networking'
+rootProject.name='App Dependency Report Example'

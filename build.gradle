@@ -1,0 +1,33 @@
+// Top-level build file
+
+buildscript {
+
+    // Get access to the plugins as defined in the versions file
+    apply from: "$rootProject.rootDir/versions.gradle"
+
+    addRepos(repositories)
+
+    // Define your plugins here
+    dependencies {
+        classpath plugin.kotlin
+        classpath plugin.gradle
+        classpath plugin.gradle_update_version
+    }
+}
+
+allprojects {
+    addRepos(repositories)
+    repositories {
+        // Ensure all modules have access to the version groups
+        dependencies { apply from: "$rootProject.rootDir/version-groups.gradle" }
+    }
+}
+
+subprojects {
+    // Ensure all modules can report their dependencies
+    apply from: "$rootProject.rootDir/dependency-update.gradle"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,39 @@
+// Define a group
+def Group(Closure closure) {
+    closure.delegate = dependencies
+    return closure
+}
+
+// Make globally accessible to modules
+ext {
+
+    kotlin = Group {
+        implementation deps.core.kotlin_stdlib
+    }
+
+    androidx = Group {
+        implementation deps.androidx.appcompat
+        implementation deps.androidx.ktx_core
+        implementation deps.androidx.ktx_fragment
+        implementation deps.androidx.constraintlayout
+    }
+
+    ui = Group {
+        implementation deps.ui.material
+    }
+
+    network = Group {
+        implementation deps.network.retrofit_core
+        implementation deps.network.retrofit_converter_gson
+        implementation deps.network.log_interceptor
+        api deps.network.glide_core
+        kapt deps.network.glide_compiler
+    }
+
+    testing = Group {
+        testImplementation deps.testing.junit
+        testImplementation deps.testing.androidx_junit
+        androidTestImplementation deps.testing.espresso_core
+    }
+
+}

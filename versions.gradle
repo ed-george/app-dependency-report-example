@@ -1,0 +1,123 @@
+ext.deps = [:]
+
+// Top level KVPs
+def versions = [:]
+def deps = [:]
+
+// def means we're making a local variable.
+// We'll use this map to build our deps key/value pairs below
+
+// Kotlin Version
+versions.kotlin = '1.3.61'
+
+// ######################################################################################
+// # Build Versions
+// ######################################################################################
+
+// Android related dependencies
+def build_versions = [:]
+build_versions.min_sdk = 23
+build_versions.target_sdk = 29
+build_versions.compile_sdk = 29
+build_versions.java = JavaVersion.VERSION_1_8
+build_versions.kotlin_jvm = "1.8"
+ext.build_versions = build_versions
+
+// ######################################################################################
+// # Plugins
+// ######################################################################################
+
+def plugins_version = [:]
+plugins_version.kotlin_plugin = versions.kotlin
+plugins_version.android_gradle_plugin = '3.5.3'
+plugins_version.gradle_update_version = '0.27.0'
+versions.plugins = plugins_version
+
+def plugins = [:]
+plugins.kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.plugins.kotlin_plugin"
+plugins.gradle = "com.android.tools.build:gradle:$versions.plugins.android_gradle_plugin"
+plugins.gradle_update_version = "com.github.ben-manes:gradle-versions-plugin:$versions.plugins.gradle_update_version"
+ext.plugin = plugins
+
+// ######################################################################################
+// # Dependencies
+// ######################################################################################
+
+// CORE
+
+def core_deps = [:]
+core_deps.kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+deps.core = core_deps
+
+// ANDROIDX
+
+def androidx_version = [:]
+androidx_version.appcompat = '1.0.2'
+androidx_version.ktx_core = '1.0.2'
+androidx_version.ktx_fragment = '1.2.0'
+androidx_version.constraintlayout = '1.1.3'
+versions.androidx = androidx_version
+
+def androidx_deps = [:]
+androidx_deps.appcompat = "androidx.appcompat:appcompat:$versions.androidx.appcompat"
+androidx_deps.ktx_core = "androidx.core:core-ktx:$versions.androidx.ktx_core"
+androidx_deps.ktx_fragment = "androidx.fragment:fragment-ktx:$versions.androidx.ktx_fragment"
+androidx_deps.constraintlayout = "androidx.constraintlayout:constraintlayout:$versions.androidx.constraintlayout"
+deps.androidx = androidx_deps
+
+// UI
+
+def ui_versions = [:]
+ui_versions.material = '1.0.0'
+versions.ui = ui_versions
+
+def ui_deps = [:]
+ui_deps.material = "com.google.android.material:material:$versions.ui.material"
+deps.ui = ui_deps
+
+// NETWORKING
+
+def network_version = [:]
+network_version.retrofit = '2.6.2'
+network_version.glide = '4.9.0'
+network_version.okhttp = '3.14.2'
+versions.network = network_version
+
+def network_deps = [:]
+network_deps.retrofit_core = "com.squareup.retrofit2:retrofit:$versions.network.retrofit"
+network_deps.retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:$versions.network.retrofit"
+network_deps.log_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.network.okhttp"
+network_deps.glide_core = "com.github.bumptech.glide:glide:$versions.network.glide"
+network_deps.glide_compiler = "com.github.bumptech.glide:compiler:$versions.network.glide"
+deps.network = network_deps
+
+// TESTING
+
+def testing_version = [:]
+testing_version.junit = '4.12'
+testing_version.androidx_junit = '1.1.0'
+testing_version.espresso_core = '3.1.1'
+versions.testing = testing_version
+
+def testing_deps = [:]
+testing_deps.junit = "junit:junit:$versions.testing.junit"
+testing_deps.androidx_junit = "androidx.test.ext:junit:$versions.testing.androidx_junit"
+testing_deps.espresso_core = "androidx.test.espresso:espresso-core:$versions.testing.espresso_core"
+deps.testing = testing_deps
+
+// Add your dependencies here...
+
+// ######################################################################################
+// # Add Repo Method
+// ######################################################################################
+
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.maven { url 'https://plugins.gradle.org/m2/' }
+}
+
+ext.addRepos = this.&addRepos
+
+// Create global level dependencies
+ext.deps = deps
